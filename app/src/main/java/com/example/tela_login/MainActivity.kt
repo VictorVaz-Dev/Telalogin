@@ -19,20 +19,30 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Login_ProjectTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    Login_Project()
+            val navController = rememberNavController()
+
+            NavHost(navController = navController, startDestination = "loginScreen") {
+                composable("loginScreen") {
+                    Login_Project(navController = navController)
+                }
+                composable("homeScreen") {
+                    HomeScreen(navController = navController)
                 }
             }
         }
     }
 }
 
+
 @Composable
+fun Login_Project(navController: NavController) {
+    Button(
+        onClick = { navController.popBackStack() },
+        modifier = Modifier.align(Alignment.CenterHorizontally)
+    ) {
+        Text(text = "Voltar para o Login")
+    }
+}
 @Preview
 fun Login_Project() {
 
@@ -180,7 +190,5 @@ fun Login_Project() {
                     }
                 }
             }
-
         }
-
     }
